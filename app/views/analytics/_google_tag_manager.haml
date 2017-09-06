@@ -29,24 +29,8 @@
       window.dataLayer.push(data);
     }
   };
-  
-  window.ST.analytics.gtm_handler = function(event, args) {
-    if (args.category == 'km_record') {
-      var data = $.extend({}, args.props);
-      data.event = 'km_record';
-      window.ST.gtmPush(data);
-    } else {
-      window.ST.gtmPush({
-        'event' : 'GAEvent',
-        'eventCategory' : args.category,
-        'eventAction' : args.saction,
-        'eventLabel' : args.opt_label,
-        'eventValue' : undefined
-      });
-    }
-  }
-  $(document).on('st-analytics:event', window.ST.analytics.gtm_handler);
 
-  $(document).on('st-analytics:setup', function(event, info) {
-    _gtm_identify(dataLayer, info.community_id, info.feature_flags);
+  onDocumentReady(function() {
+    ST.analytics.initGoogleTagManager();
   });
+

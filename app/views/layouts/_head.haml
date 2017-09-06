@@ -7,7 +7,7 @@
 %head
   %meta{charset: "utf-8"}
 
-  = render :partial => 'analytics/head_scripts'
+  = render :partial => 'analytics/head_scripts', locals: { community: @current_community, user: @current_user, plan: @current_plan }
 
   :css
     @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&subset=latin-ext);

@@ -115,4 +115,6 @@
     :javascript
       $(document).ready(function() { initialize_defaults("#{I18n.locale}"); #{yield :javascript} });
 
+    = render :partial => 'analytics/bottom_scripts'
+
     = render :partial => "layouts/noscript"

@@ -9,13 +9,7 @@
     }, 1);
     }
     _kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');
-    $(document).on("st-analytics:setup", function(event, info) {
-      if(info.user_id) {
-        _kmq.push(['identify', info.user_id]);
-      }
-      if(info.community_ident) {
-        _kmq.push(['set', {'SiteName' : info.community_ident});
-      } else {
-        _kmq.push(['set', {'SiteName' : 'dashboard'});
-      }
+    onDocumentReady(function() {
+      ST.analytics.initKissmetrics(_kmq);
     });
+
