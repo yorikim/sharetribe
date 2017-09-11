@@ -35,7 +35,8 @@ class ApplicationController < ActionController::Base
     :cannot_access_without_confirmation,
     :ensure_consent_given,
     :ensure_user_belongs_to_community,
-    :set_display_expiration_notice
+    :set_display_expiration_notice,
+    :setup_intercom_user
 
   # This updates translation files from WTI on every page load. Only useful in translation test servers.
   before_action :fetch_translations if APP_CONFIG.update_translations_on_every_page_load == "true"
@@ -595,5 +596,9 @@ class ApplicationController < ActionController::Base
 
   def render_not_found!(msg = "Not found")
     raise ActionController::RoutingError.new(msg)
+  end
+
+  def setup_intercom_user
+    AnalyticService::API::Intercom.setup_person(person: @current_user, community: @current_community)
   end
 end

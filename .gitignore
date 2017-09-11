@@ -66,3 +66,5 @@ client/node_modules
 
 # Mocha results
 test-results.xml
+
+.byebug_history

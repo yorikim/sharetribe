@@ -26,6 +26,7 @@ class Admin::CommunityCustomizationsController < Admin::AdminBaseController
 
   def update_details
     update_results = []
+    analytic = AnalyticService::CommunityCustomizations.new(@current_user)
 
     customizations = @current_community.locales.map do |locale|
       permitted_params = [
@@ -38,7 +39,9 @@ class Admin::CommunityCustomizationsController < Admin::AdminBaseController
       ]
       locale_params = params.require(:community_customizations).require(locale).permit(*permitted_params)
       customizations = find_or_initialize_customizations_for_locale(locale)
-      update_results.push(customizations.update_attributes(locale_params))
+      customizations.assign_attributes(locale_params)
+      analytic.process(customizations)
+      update_results.push(customizations.update_attributes({}))
       customizations
     end
 
@@ -56,6 +59,7 @@ class Admin::CommunityCustomizationsController < Admin::AdminBaseController
     transaction_agreement_checked = Maybe(params)[:community][:transaction_agreement_checkbox].is_some?
     update_results.push(@current_community.update_attributes(transaction_agreement_in_use: transaction_agreement_checked))
 
+    analytic.send_properties
     if update_results.all? && (!process_locales || enabled_locales_valid)
 
       # Onboarding wizard step recording
@@ -109,5 +113,4 @@ class Admin::CommunityCustomizationsController < Admin::AdminBaseController
   def has_preauthorize_process?(processes)
     processes.any? { |p| p[:process] == :preauthorize }
   end
-
 end

@@ -19,7 +19,7 @@ module AnalyticsHelper
       plan_created_at:    @current_plan && @current_plan[:created_at].to_time.to_i || 'null',
       plan_updated_at:    @current_plan && @current_plan[:updated_at].to_time.to_i || 'null',
       plan_expires_at:    @current_plan && @current_plan[:expires_at]&.to_time&.to_i,
-      plan_features:      @current_plan && @current_plan[:features].select { |_, v| v }.keys.join(", ") || 'null' ,
+      plan_features:      @current_plan && @current_plan[:features].select { |_, v| v }.keys.join(", ") || 'null',
 
       identity_information: @current_user ? IntercomHelper.identity_information(@current_user) : 'null'
     }
