@@ -53,6 +53,8 @@ class SessionsController < ApplicationController
 
     sign_in @current_user
 
+    setup_intercom_user
+
     session[:form_login] = nil
 
     unless @current_user.is_admin? || terms_accepted?(@current_user, @current_community)
