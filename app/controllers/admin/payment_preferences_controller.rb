@@ -236,7 +236,7 @@ class Admin::PaymentPreferencesController < Admin::AdminBaseController
           Analytics.record_event(flash, "km_record", {km_event: "Onboarding payments setup"})
           Analytics.record_event(flash, "km_record", {km_event: "Onboarding paypal connected"})
 
-        flash[:show_onboarding_popup] = true
+          flash[:show_onboarding_popup] = true
         end
         flash[:notice] = t("admin.payment_preferences.transaction_fee_settings_updated")
       else
