@@ -86,7 +86,7 @@ class SessionsController < ApplicationController
     IntercomHelper::ShutdownHelper.intercom_shutdown(session, cookies, request.host_with_port)
 
     flash[:notice] = t("layouts.notifications.logout_successful")
-    Analytics.mark_logged_out(flash, logged_out_user, @current_community)
+    mark_logged_out(flash, logged_out_user)
     redirect_to landing_page_path
   end
 

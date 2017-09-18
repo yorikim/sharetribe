@@ -19,7 +19,7 @@ Current events:
 In controllers:
 
 ```ruby
-  Analytics.record_event(flash, event_category, event_data) 
+  record_event(flash, event_category, event_data) 
 ```
 
 Current events:

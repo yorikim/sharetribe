@@ -129,7 +129,7 @@ class Admin::CustomFieldsController < Admin::AdminBaseController
       state_changed = Admin::OnboardingWizard.new(@current_community.id)
         .update_from_event(:custom_field_created, @custom_field)
       if state_changed
-        Analytics.record_event(flash, "km_record", {km_event: "Onboarding filter created"})
+        record_event(flash, "km_record", {km_event: "Onboarding filter created"})
         flash[:show_onboarding_popup] = true
       end
 

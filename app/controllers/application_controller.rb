@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include IconHelper
   include DefaultURLOptions
+  include Analytics
   protect_from_forgery
   layout 'application'
 
