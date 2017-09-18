@@ -13,6 +13,7 @@ module AnalyticService
             event_name: event_data.try(:[], :event_name),
             created_at: Time.current.to_i,
             email: person_email(person),
+            user_id: person.uuid_object.to_s,
             metadata: event_data
           )
         end
