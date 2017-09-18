@@ -266,7 +266,7 @@ class Admin::CommunitiesController < Admin::AdminBaseController
   def update_look_and_feel
     @community = @current_community
     @selected_left_navi_link = "tribe_look_and_feel"
-    analytic = AnalyticService::CommunityLookAndFeel.new(@current_user)
+    analytic = AnalyticService::CommunityLookAndFeel.new(user: @current_user, community: @current_community)
 
     params[:community][:custom_color1] = nil if params[:community][:custom_color1] == ""
     params[:community][:custom_color2] = nil if params[:community][:custom_color2] == ""

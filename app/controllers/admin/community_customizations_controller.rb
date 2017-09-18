@@ -26,7 +26,7 @@ class Admin::CommunityCustomizationsController < Admin::AdminBaseController
 
   def update_details
     update_results = []
-    analytic = AnalyticService::CommunityCustomizations.new(@current_user)
+    analytic = AnalyticService::CommunityCustomizations.new(user: @current_user, community: @current_community)
 
     customizations = @current_community.locales.map do |locale|
       permitted_params = [

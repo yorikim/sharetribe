@@ -16,12 +16,16 @@ describe AnalyticService::API::Api do
 
     it '#send_event' do
       expect_any_instance_of(AnalyticService::API::Intercom).to receive(:event)
-      AnalyticService::API::Api.send_event(person, {event_name: 'logout'})
+      AnalyticService::API::Api.send_event(person: person,
+                                           community: community,
+                                           event_data: {event_name: 'logout'})
     end
 
     it '#send_incremental_properties' do
       expect_any_instance_of(AnalyticService::API::Intercom).to receive(:update_user_incremental_properties)
-      AnalyticService::API::Api.send_incremental_properties(person, {property: 1})
+      AnalyticService::API::Api.send_incremental_properties(person: person,
+                                                            community: community,
+                                                            properties: {property: 1})
     end
   end
 end

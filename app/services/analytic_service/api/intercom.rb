@@ -74,13 +74,13 @@ module AnalyticService
             APP_CONFIG.admin_intercom_access_token.present?
         end
 
-        def enabled_for_person?(person)
-          enabled? && person && person.is_admin?
+        def enabled_for_person?(person:, community:)
+          enabled? && person && community && person.is_marketplace_admin?(community)
         end
 
-        def send_event(person, event_data)
+        def send_event(person:, community:, event_data:)
           event_name = event_data.try(:[], :event_name)
-          if enabled_for_person?(person) && track_event?(event_name)
+          if enabled_for_person?(person: person, community: community) && track_event?(event_name)
             new.event(
               person_id: person.id,
               event_data: event_data
@@ -93,13 +93,13 @@ module AnalyticService
         end
 
         def setup_person(person:, community:)
-          if enabled_for_person?(person)
+          if enabled_for_person?(person: person, community: community)
             new.create_or_update_user(person_id: person.id, community_id: community.try(:id))
           end
         end
 
-        def send_incremental_properties(person, properties)
-          if enabled_for_person?(person)
+        def send_incremental_properties(person:, community:, properties:)
+          if enabled_for_person?(person: person, community: community)
             new.update_user_incremental_properties(
               person_id: person.id,
               properties: properties.stringify_keys
