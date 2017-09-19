@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     :ensure_consent_given,
     :ensure_user_belongs_to_community,
     :set_display_expiration_notice,
-    :delayed_setup_intercom_user
+    :setup_intercom_user
 
   # This updates translation files from WTI on every page load. Only useful in translation test servers.
   before_action :fetch_translations if APP_CONFIG.update_translations_on_every_page_load == "true"
@@ -456,7 +456,6 @@ class ApplicationController < ActionController::Base
     if person
       sign_in(person)
       @current_user = person
-      @delayed_setup_intercom_user = true
 
       # Clean the URL from the used token
       path_without_auth_token = URLUtils.remove_query_param(request.fullpath, "auth")
@@ -601,10 +600,12 @@ class ApplicationController < ActionController::Base
   end
 
   def setup_intercom_user
-    AnalyticService::API::Intercom.setup_person(person: @current_user, community: @current_community)
+    if admin_controller?
+      AnalyticService::API::Intercom.setup_person(person: @current_user, community: @current_community)
+    end
   end
 
-  def delayed_setup_intercom_user
-    setup_intercom_user if @delayed_setup_intercom_user
+  def admin_controller?
+    self.class.name =~ /^Admin/
   end
 end
