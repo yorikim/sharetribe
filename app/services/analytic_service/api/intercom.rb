@@ -28,7 +28,9 @@ module AnalyticService
             email: person_email(person),
             signed_up_at: person.created_at.to_i,
             name: PersonViewUtils.person_display_name_for_type(person, nil),
-            last_seen_ip: person.current_sign_in_ip.to_s
+            last_seen_ip: person.current_sign_in_ip.to_s,
+            last_request_at: person.current_sign_in_at.to_i,
+            update_last_request_at: true
           )
           intercom_user.custom_attributes.merge!(
             AnalyticService::PersonAttributes.new(
