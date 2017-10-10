@@ -154,6 +154,7 @@ class SessionsController < ApplicationController
     request.env["omniauth.strategy"].options[:iframe] = true
     request.env["omniauth.strategy"].options[:scope] = "public_profile,email"
     request.env["omniauth.strategy"].options[:info_fields] = "name,email,last_name,first_name"
+    request.env["omniauth.strategy"].options[:callback_url] = "name,email,last_name,first_name"
 
     render :plain => "Setup complete.", :status => 404 #This notifies the ominauth to continue
   end
